@@ -70,8 +70,9 @@ class CalculatorController(textOutput: TextView) {
                 lastOperation = (view as Button).text.toString()
                 output += lastOperation
             } else {
-                TODO("IMPLEMENT OPERATION CHANGE")
-                Log.d("PANIC", "PANICASJICASIJ")
+                isResult = false
+                lastOperation = (view as Button).text.toString()
+                output = output.substring(0, output.length - 1) + lastOperation
             }
         }
     }
@@ -91,7 +92,7 @@ class CalculatorController(textOutput: TextView) {
                     operator2 = aux[1].toDouble()
                 }
             }
-            if (operator2 == 0.0) {
+            if (operator2 == 0.0 && lastOperation == "/") {
                 onClr()
                 output = "Infinity"
                 isResult = true
