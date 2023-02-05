@@ -1,6 +1,5 @@
 package ismael.example.mycalculator
 
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -15,13 +14,12 @@ class CalculatorController(textOutput: TextView) {
     private var lastNumber: Boolean = false
     private val textView: TextView = textOutput
     private var output: String = ""
-        get() = field
         set(value) {
             field = value
             textView.text = value
         }
 
-    fun onClr() {
+    private fun onClr() {
         output = ""
         operator1 = 0.0
         operator2 = 0.0
@@ -31,7 +29,7 @@ class CalculatorController(textOutput: TextView) {
         lastNumber = false
     }
 
-    fun onNumber(view: View) {
+    private fun onNumber(view: View) {
         if (isResult) {
             onClr()
         }
@@ -41,7 +39,7 @@ class CalculatorController(textOutput: TextView) {
         }
     }
 
-    fun onDot(view: View) {
+    private fun onDot() {
         if (!alreadyDot && lastNumber) {
             output += "."
             alreadyDot = true
@@ -49,7 +47,7 @@ class CalculatorController(textOutput: TextView) {
         }
     }
 
-    fun onOp(view: View) {
+    private fun onOp(view: View) {
         isResult = false
         lastNumber = false
         alreadyDot = false
@@ -65,7 +63,7 @@ class CalculatorController(textOutput: TextView) {
                     "/"
                 )
             ) {
-                onEqual(null)
+                onEqual()
                 isResult = false
                 lastOperation = (view as Button).text.toString()
                 output += lastOperation
@@ -77,7 +75,7 @@ class CalculatorController(textOutput: TextView) {
         }
     }
 
-    fun onEqual(view: View?) {
+    private fun onEqual() {
         var result = 0.0
         if (output != "" && !isResult) {
             if (output[output.length - 1].toString() !in arrayListOf(
@@ -87,7 +85,7 @@ class CalculatorController(textOutput: TextView) {
                     "/"
                 )
             ) {
-                val aux = output.toString().split("+", "-", "/", "x")
+                val aux = output.split("+", "-", "/", "x")
                 if (aux.size > 1) {
                     operator2 = aux[1].toDouble()
                 }
@@ -134,10 +132,10 @@ class CalculatorController(textOutput: TextView) {
                 }
             }
         }
-        TODO("VER DIVISAO")
+        return ""
     }
 
-    public fun onClickEvents(button: Button) {
+    fun onClickEvents(button: Button) {
         when (button.id) {
             R.id.CLR -> {
                 button.setOnClickListener {
@@ -166,12 +164,12 @@ class CalculatorController(textOutput: TextView) {
             }
             R.id.equal -> {
                 button.setOnClickListener {
-                    onEqual(button)
+                    onEqual()
                 }
             }
             R.id.dot -> {
                 button.setOnClickListener {
-                    onDot(button)
+                    onDot()
                 }
             }
             else -> {
